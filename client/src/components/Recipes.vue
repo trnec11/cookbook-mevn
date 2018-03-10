@@ -1,5 +1,7 @@
 <template>
     <div>
+        <h1 class="blog-header">Recipes:</h1>
+        <hr>
         <div class="blog-post" v-for="recipe in recipes" :key="recipe.id">
             <h2 class="blog-post-title">{{ recipe.title }}</h2>
             <p class="blog-post-meta">January 1, 2014 by <a href="#">Mark</a></p>
@@ -30,8 +32,6 @@ export default {
       this.recipes = response.data.lists;
     },
   },
-
-
 };
 </script>
 
