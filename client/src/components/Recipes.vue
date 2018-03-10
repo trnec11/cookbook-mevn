@@ -1,11 +1,11 @@
 <template>
-  <div class="hello">
-    <h1>Recipe List</h1>
-      <div v-for="recipe in recipes" :key="recipe.id">
-          <h3>{{ recipe.title }}</h3>
-          <p>{{ recipe.description }}</p>
-      </div>
-  </div>
+    <div>
+        <div class="blog-post" v-for="recipe in recipes" :key="recipe.id">
+            <h2 class="blog-post-title">{{ recipe.title }}</h2>
+            <p class="blog-post-meta">January 1, 2014 by <a href="#">Mark</a></p>
+            <p>{{ recipe.description }}</p>
+        </div><!-- /.blog-post -->
+    </div>
 </template>
 
 <script>
@@ -26,7 +26,7 @@ export default {
   methods: {
     async getRecipes() {
       const response = await RecipesServices.fetchRecipes();
-      console.log(response.data.lists)
+      console.log(response.data.lists);
       this.recipes = response.data.lists;
     },
   },
@@ -36,19 +36,19 @@ export default {
 </script>
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
-<style scoped>
-h1, h2 {
-  font-weight: normal;
-}
-ul {
-  list-style-type: none;
-  padding: 0;
-}
-li {
-  display: inline-block;
-  margin: 0 10px;
-}
-a {
-  color: #42b983;
-}
-</style>
+<!--<style scoped>-->
+<!--h1, h2 {-->
+  <!--font-weight: normal;-->
+<!--}-->
+<!--ul {-->
+  <!--list-style-type: none;-->
+  <!--padding: 0;-->
+<!--}-->
+<!--li {-->
+  <!--display: inline-block;-->
+  <!--margin: 0 10px;-->
+<!--}-->
+<!--a {-->
+  <!--color: #42b983;-->
+<!--}-->
+<!--</style>-->
