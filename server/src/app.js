@@ -1,33 +1,52 @@
-const express = require('express')
-const bodyParser = require('body-parser')
-const cors = require('cors')
-const morgan = require('morgan')
+// We will declare all our dependencies here
+const express = require('express');
+const path = require('path');
+const bodyParser = require('body-parser');
+const cors = require('cors');
+const mongoose = require('mongoose');
+const config = require('./config/database');
+const recipelist = require('./controllers/recipelist');
 
-const mongoose = require('mongoose')
-const dbconfig = require('./config/database')
-const recipelist = require('./controllers/recipelist')
-mongoose.connect(dbconfig.database);
+//Connect mongoose to our database
+mongoose.connect(config.database);
+
+// const Cat = mongoose.model('Cat', { name: String });
+//
+// const kitty = new Cat({ name: 'Zildjian' });
+// kitty.save().then(() => console.log('meow'));
+
+//Declaring Port
+const port = 8081;
+
+//Initialize our app variable
+const app = express();
+
+//Middleware for CORS
+app.use(cors());
+
+//Middlewares for bodyparsing using both json and urlencoding
+app.use(bodyParser.urlencoded({extended:true}));
+app.use(bodyParser.json());
 
 
-const Cat = mongoose.model('Cat', { name: String });
 
-const kitty = new Cat({ name: 'Zildjian' });
-kitty.save().then(() => console.log('meow'));
+/*express.static is a built in middleware function to serve static files.
+ We are telling express server public folder is the place to look for the static files
 
-const app = express()
-app.use(morgan('combined'))
-app.use(bodyParser.json())
-app.use(cors())
+*/
+app.use(express.static(path.join(__dirname, 'public')));
 
-app.get('/recipes', (req, res) => {
-	res.send(
-		[{
-			title: 'Hello World!',
-			description: 'Hi there! How are you?'
-		}]
-	)
-})
 
-// app.use('/bucketlist',bucketlist);
+app.get('/', (req,res) => {
+    res.send("Invalid page");
+});
 
-app.listen(process.env.PORT || 8081)
+
+//Routing all HTTP requests to /recipelist to recipelist controller
+app.use('/recipes',recipelist);
+
+
+//Listen to port 3000
+app.listen(port, () => {
+    console.log(`Starting the server at port ${port}`);
+});
