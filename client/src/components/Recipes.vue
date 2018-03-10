@@ -1,8 +1,8 @@
 <template>
   <div class="hello">
-    <h1>Home</h1>
+    <h1>Recipe List</h1>
       <div v-for="recipe in recipes" :key="recipe.id">
-          <h3>{{ recipe.title}}</h3>
+          <h3>{{ recipe.title }}</h3>
           <p>{{ recipe.description }}</p>
       </div>
   </div>
@@ -13,7 +13,7 @@
 import RecipesServices from '@/services/RecipesService';
 
 export default {
-  name: 'Home',
+  name: 'Recipes',
   data() {
     return {
       recipes: [],
@@ -26,7 +26,8 @@ export default {
   methods: {
     async getRecipes() {
       const response = await RecipesServices.fetchRecipes();
-      this.recipes = response.data;
+      console.log(response.data.lists)
+      this.recipes = response.data.lists;
     },
   },
 
