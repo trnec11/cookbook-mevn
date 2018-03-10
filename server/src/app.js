@@ -3,6 +3,17 @@ const bodyParser = require('body-parser')
 const cors = require('cors')
 const morgan = require('morgan')
 
+const mongoose = require('mongoose')
+const dbconfig = require('./config/database')
+const recipelist = require('./controllers/recipelist')
+mongoose.connect(dbconfig.database);
+
+
+const Cat = mongoose.model('Cat', { name: String });
+
+const kitty = new Cat({ name: 'Zildjian' });
+kitty.save().then(() => console.log('meow'));
+
 const app = express()
 app.use(morgan('combined'))
 app.use(bodyParser.json())
@@ -16,5 +27,7 @@ app.get('/recipes', (req, res) => {
 		}]
 	)
 })
+
+// app.use('/bucketlist',bucketlist);
 
 app.listen(process.env.PORT || 8081)
