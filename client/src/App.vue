@@ -1,12 +1,23 @@
 <template>
   <div id="app">
+
     <router-view/>
+
   </div>
 </template>
 
 <script>
+import Recipes from './components/Recipes';
+import NewRecipe from './components/NewRecipe';
+
 export default {
   name: 'App',
+
+/*  components: {
+      AppNewRecipe,
+      'app-recipes': Recipes,
+    'app-new-recipe': NewRecipe,
+  },*/
 };
 </script>
 
@@ -15,8 +26,31 @@ export default {
   font-family: 'Avenir', Helvetica, Arial, sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-  text-align: center;
-  color: #2c3e50;
-  margin-top: 60px;
+/* stylelint-disable selector-list-comma-newline-after */
+
+
+  /* Pagination */
+  .blog-pagination {
+    margin-bottom: 4rem;
+  }
+  .blog-pagination > .btn {
+    border-radius: 2rem;
+  }
+
+  /*
+   * Blog posts
+   */
+  .blog-post {
+    margin-bottom: 4rem;
+  }
+  .blog-post-title {
+    margin-bottom: .25rem;
+    font-size: 2.5rem;
+  }
+  .blog-post-meta {
+    margin-bottom: 1.25rem;
+    color: #999;
+  }
+
 }
 </style>
