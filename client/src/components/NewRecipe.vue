@@ -11,6 +11,9 @@
           </div>
           <button type="submit" class="btn btn-success mb-2" @click="addRecipe">Send</button>
         </div><!-- /.blog-post -->
+        <div class="add_recipe">
+            <router-link v-bind:to="{ name: 'recipes' }" class="back_link_btn">Back</router-link>
+        </div>
     </div>
 </template>
 
@@ -37,7 +40,7 @@ export default {
         'Your recipe has been added!',
         'success',
       );
-      this.$router.push({ name: 'Recipes' });
+      this.$router.push({ name: 'recipes' });
     },
   },
 };
@@ -46,11 +49,9 @@ export default {
  Add "scoped" attribute to limit CSS to this component only
 <style scoped>
 
-/*
-.blog-form {
-    padding: 1.25em;
-    border: cornflowerblue 1px solid;
+.back_link_btn {
+    /*padding: 1.25em;*/
+    color: #999999;
 }
-*/
 
 </style>
