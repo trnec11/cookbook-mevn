@@ -25,10 +25,15 @@ module.exports.getAllLists = (callback) => {
 	RecipeList.find(callback)
 }
 
-//RecipeList.find() returns all the lists
+//RecipeList.findOne() returns one list
 module.exports.getOne = (id, callback) => {
 	let query = {_id: id}
-	RecipeList.findOne(query, callback)
+	RecipeList.findById(query, callback)
+}
+
+module.exports.updateListById = (id, setup, callback) => {
+    let query = {_id: id}
+	RecipeList.findByIdAndUpdate(query, setup, callback)
 }
 
 //newList.save is used to insert the document into MongoDB

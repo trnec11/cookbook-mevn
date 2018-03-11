@@ -11,7 +11,9 @@
                 <h2 class="blog-post-title">{{ recipe.title }}</h2>
                 <p class="blog-post-meta">January 1, 2014 by <a href="#">Mark</a></p>
                 <p>{{ recipe.description }}</p>
-                <router-link v-bind:to="{ name: 'updateRecipe', params: { id: recipe._id } }">Edit</router-link>
+                <div class="edit_recipe">
+                    <router-link v-bind:to="{ name: 'updateRecipe', params: { id: recipe._id } }">Edit</router-link>
+                </div>
             </div><!-- /.blog-post -->
 
 
@@ -50,7 +52,7 @@ export default {
     async getRecipes() {
       const response = await RecipesServices.fetchRecipes();
       console.log(response.data.lists);
-      this.recipes = response.data.lists;
+      this.recipes = response.data.lists.sort();
     },
   },
 };
@@ -73,5 +75,10 @@ export default {
 
     .add_recipe {
         padding: 1.25em 0;
+    }
+
+    .edit_recipe {
+        display: inline-block;
+        padding: .75em 0;
     }
 </style>

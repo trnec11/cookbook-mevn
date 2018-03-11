@@ -7,7 +7,8 @@ const app = express()
 
 //GET HTTP method to /recipelist
 router.get('/',(req,res) => {
-	recipelist.getAllLists((err, lists)=> {
+	recipelist.getAllLists((err, lists) => {
+		lists.sort({title: -1})
 		if(err) {
 			res.json({success:false, message: `Failed to load all lists. Error: ${err}`})
 		}
@@ -22,7 +23,7 @@ router.get('/',(req,res) => {
 //GET HTTP method to /recipelist/:id
 router.get('/:id',(req,res) => {
 	let id = req.params.id
-	console.log(id)
+	// console.log(id)
 	recipelist.getOne(id, (err, list) => {
 		if(err) {
 			res.json({success:false, message: `Failed to load one list. Error: ${err}`})
@@ -39,7 +40,7 @@ router.get('/:id',(req,res) => {
 //POST HTTP method to /recipelist
 
 router.post('/add', (req,res,next) => {
-	console.log(req.body)
+	// console.log(req.body)
 	let newList = new recipelist({
 		title: req.body.title,
 		description: req.body.description,
@@ -56,11 +57,24 @@ router.post('/add', (req,res,next) => {
 	})
 })
 
+router.put('/:id', (req,res,next) => {
+	// console.log(req.body)
+	let id = req.params.id
+	recipelist.updateListById(id, {$set:req.body}, (err) => {
+		if(err) {
+			res.json({success: false, message: `Failed to create a new list. Error: ${err}`})
+
+		}
+		res.send('updated')
+	})
+
+})
+
 
 //DELETE HTTP method to /recipelist. Here, we pass in a params which is the object id.
 router.delete('/:id', (req,res,next)=> {
 	let id = req.params.id
-	console.log(id)
+	// console.log(id)
 	recipelist.deleteListById(id,(err,list) => {
 		if(err) {
 			res.json({success:false, message: `Failed to delete the list. Error: ${err}`})

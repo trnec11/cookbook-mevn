@@ -3,6 +3,9 @@
         <h3>{{ title }}</h3>
         <p>{{ description }}</p>
         <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModal" data-whatever="@mdo">Edit Recipe</button>
+        <div class="edit_recipe">
+            <router-link v-bind:to="{ name: 'recipes' }" class="back_link_btn">Back</router-link>
+        </div>
         <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
             <div class="modal-dialog" role="document">
                 <div class="modal-content">
@@ -23,8 +26,8 @@
                         </div>
                     </div>
                     <div class="modal-footer">
-                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                        <button type="button" class="btn btn-primary">Save recipe</button>
+                        <!--<button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>-->
+                        <button type="button" class="btn btn-primary" data-dismiss="modal" @click="updateRecipe">Save recipe</button>
                     </div>
                 </div>
             </div>
@@ -67,7 +70,7 @@ export default {
         'Your post has been updated!',
         'success',
       );
-      this.$router.push({ name: 'recipes' });
+      this.$router.push({ name: 'updateRecipe' });
     },
   },
 };
@@ -75,20 +78,9 @@ export default {
 
  Add "scoped" attribute to limit CSS to this component only
 <style scoped>
-    a {
-        color: #4d7ef7;
-        text-decoration: none;
-    }
-    a.add_post_link {
-        background: #4d7ef7;
-        color: #fff;
-        padding: 10px 80px;
-        text-transform: uppercase;
-        font-size: 12px;
-        font-weight: bold;
-    }
 
-    .add_recipe {
-        padding: 1.25em 0;
+    .edit_recipe {
+        display: inline-block;
+        padding: 1.25em;
     }
 </style>
