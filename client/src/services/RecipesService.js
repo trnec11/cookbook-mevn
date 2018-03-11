@@ -14,7 +14,7 @@ export default {
   },
 
   getRecipe(params) {
-    return Api().get(`recipe/${params.id}`);
+    return Api().get(`recipes/${params.id}`);
   },
 
   deleteRecipe(id) {

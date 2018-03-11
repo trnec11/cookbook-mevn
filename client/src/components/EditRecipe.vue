@@ -1,31 +1,33 @@
 <template>
     <div>
-        <h1 class="blog-header">Recipes:</h1>
-        <hr>
-        <div v-if="recipes.length > 0">
-            <div class="add_recipe">
-                <router-link v-bind:to="{ name: 'newrecipe' }" class="add_post_link">Add Recipe</router-link>
+        <h3>{{ title }}</h3>
+        <p>{{ description }}</p>
+        <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModal" data-whatever="@mdo">Edit Recipe</button>
+        <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="exampleModalLabel">New message</h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="modal-body">
+                        <div class="form-group">
+                            <label for="recipient-name" class="col-form-label">Title:</label>
+                            <input type="text" class="form-control" id="recipient-name" v-model="title">
+                        </div>
+                        <div class="form-group">
+                            <label for="message-text" class="col-form-label">Description:</label>
+                            <textarea class="form-control" id="message-text" rows="10" v-model="description"></textarea>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                        <button type="button" class="btn btn-primary">Save recipe</button>
+                    </div>
+                </div>
             </div>
-            <hr>
-            <div class="blog-post" v-for="recipe in recipes" :key="recipe.id">
-                <h2 class="blog-post-title">{{ recipe.title }}</h2>
-                <p class="blog-post-meta">January 1, 2014 by <a href="#">Mark</a></p>
-                <p>{{ recipe.description }}</p>
-            </div><!-- /.blog-post -->
-
-
-            <nav class="blog-pagination">
-                <a class="btn btn-outline-primary" href="#">Older</a>
-                <a class="btn btn-outline-secondary disabled" href="#">Newer</a>
-            </nav>
-        </div>
-        <div v-else>
-            <div class="add_recipe">
-                <router-link v-bind:to="{ name: 'NewRecipe' }" class="add_post_link">Add Recipe</router-link>
-            <br>
-            </div>
-            nothing yet
-            <br>
         </div>
     </div>
 </template>
@@ -35,21 +37,37 @@
 import RecipesServices from '@/services/RecipesService';
 
 export default {
-  name: 'Recipes',
+  name: 'updateRecipe',
   data() {
     return {
-      recipes: [],
-      errors: [],
+      title: '',
+      description: '',
     };
   },
   mounted() {
-    this.getRecipes();
+    this.getRecipe();
   },
   methods: {
-    async getRecipes() {
-      const response = await RecipesServices.fetchRecipes();
-      console.log(response.data.lists);
-      this.recipes = response.data.lists;
+    async getRecipe() {
+      const response = await RecipesServices.getRecipe({
+          id: this.$route.params.id,
+      })
+      console.log(response.data.list);
+      this.title = response.data.list.title;
+      this.description = response.data.list.description;
+    },
+    async updateRecipe() {
+      await RecipesServices.updateRecipe({
+        id: this.$route.params.id,
+        title: this.title,
+        description: this.description,
+      });
+      this.$swal(
+        'Great!',
+        'Your post has been updated!',
+        'success',
+      );
+      this.$router.push({ name: 'recipes' });
     },
   },
 };

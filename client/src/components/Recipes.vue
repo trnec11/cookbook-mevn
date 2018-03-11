@@ -4,13 +4,14 @@
         <hr>
         <div v-if="recipes.length > 0">
             <div class="add_recipe">
-                <router-link v-bind:to="{ name: 'newrecipe' }" class="add_post_link">Add Recipe</router-link>
+                <router-link v-bind:to="{ name: 'newRecipe' }" class="add_post_link">Add Recipe</router-link>
             </div>
             <hr>
             <div class="blog-post" v-for="recipe in recipes" :key="recipe.id">
                 <h2 class="blog-post-title">{{ recipe.title }}</h2>
                 <p class="blog-post-meta">January 1, 2014 by <a href="#">Mark</a></p>
                 <p>{{ recipe.description }}</p>
+                <router-link v-bind:to="{ name: 'updateRecipe', params: { id: recipe._id } }">Edit</router-link>
             </div><!-- /.blog-post -->
 
 
@@ -21,7 +22,7 @@
         </div>
         <div v-else>
             <div class="add_recipe">
-                <router-link v-bind:to="{ name: 'NewRecipe' }" class="add_post_link">Add Recipe</router-link>
+                <router-link v-bind:to="{ name: 'newRecipe' }" class="add_post_link">Add Recipe</router-link>
             <br>
             </div>
             nothing yet
@@ -35,7 +36,7 @@
 import RecipesServices from '@/services/RecipesService';
 
 export default {
-  name: 'Recipes',
+  name: 'recipes',
   data() {
     return {
       recipes: [],

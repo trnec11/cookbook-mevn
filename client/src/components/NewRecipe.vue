@@ -22,7 +22,7 @@
 import RecipesServices from '@/services/RecipesService';
 
 export default {
-  name: 'NewRecipe',
+  name: 'newRecipe',
   data() {
     return {
       title: '',
