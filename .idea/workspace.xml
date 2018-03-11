@@ -2,7 +2,7 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="ffe162bf-02f3-4234-ba2f-f7661302afb7" name="Default" comment="">
-      <change beforePath="$PROJECT_DIR$/server/src/controllers/recipelist.js" afterPath="$PROJECT_DIR$/server/src/controllers/recipelist.js" />
+      <change beforePath="$PROJECT_DIR$/client/src/components/Recipes.vue" afterPath="$PROJECT_DIR$/client/src/components/Recipes.vue" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="TRACKING_ENABLED" value="true" />
@@ -13,11 +13,11 @@
   </component>
   <component name="FileEditorManager">
     <leaf>
-      <file leaf-file-name="recipelist.js" pinned="false" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/server/src/controllers/recipelist.js">
+      <file leaf-file-name="Recipes.vue" pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/client/src/components/Recipes.vue">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="150">
-              <caret line="10" column="0" lean-forward="false" selection-start-line="10" selection-start-column="0" selection-end-line="10" selection-end-column="0" />
+            <state relative-caret-position="435">
+              <caret line="53" column="0" lean-forward="false" selection-start-line="53" selection-start-column="0" selection-end-line="53" selection-end-column="0" />
               <folding />
             </state>
           </provider>
@@ -75,8 +75,8 @@
         <option value="$PROJECT_DIR$/client/src/services/RecipesService.js" />
         <option value="$PROJECT_DIR$/client/src/components/EditRecipe.vue" />
         <option value="$PROJECT_DIR$/server/src/models/List.js" />
-        <option value="$PROJECT_DIR$/client/src/components/Recipes.vue" />
         <option value="$PROJECT_DIR$/server/src/controllers/recipelist.js" />
+        <option value="$PROJECT_DIR$/client/src/components/Recipes.vue" />
       </list>
     </option>
   </component>
@@ -247,7 +247,7 @@
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="54585000" />
+    <option name="totallyTimeSpent" value="54714000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="56" y="49" width="1922" height="1053" extended-state="6" />
@@ -555,14 +555,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/client/src/components/Recipes.vue">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="810">
-          <caret line="54" column="41" lean-forward="false" selection-start-line="54" selection-start-column="41" selection-end-line="54" selection-end-column="41" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/client/src/main.js">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="45">
@@ -591,6 +583,14 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="150">
           <caret line="10" column="0" lean-forward="false" selection-start-line="10" selection-start-column="0" selection-end-line="10" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/client/src/components/Recipes.vue">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="435">
+          <caret line="53" column="0" lean-forward="false" selection-start-line="53" selection-start-column="0" selection-end-line="53" selection-end-column="0" />
           <folding />
         </state>
       </provider>

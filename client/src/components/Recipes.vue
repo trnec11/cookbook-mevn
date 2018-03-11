@@ -51,7 +51,6 @@ export default {
   methods: {
     async getRecipes() {
       const response = await RecipesServices.fetchRecipes();
-      console.log(response.data.lists);
       this.recipes = response.data.lists.sort();
     },
   },
