@@ -3,6 +3,7 @@ const express = require('express');
 const router = express.Router();
 const recipelist = require('../models/List');
 
+const app = express();
 
 //GET HTTP method to /recipelist
 router.get('/',(req,res) => {
@@ -21,12 +22,12 @@ router.get('/',(req,res) => {
 
 //POST HTTP method to /recipelist
 
-router.post('/recipes/new', (req,res,next) => {
+router.post('/add', (req,res,next) => {
 	console.log(req.body);
 	let newList = new recipelist({
 		title: req.body.title,
 		description: req.body.description,
-		category: req.body.category
+		// category: req.body.category
 	})
 	recipelist.addList(newList,(err, list) => {
 		if(err) {
@@ -37,7 +38,7 @@ router.post('/recipes/new', (req,res,next) => {
 			res.json({success:true, message: 'Added successfully.'})
 
 	})
-})
+});
 
 
 //DELETE HTTP method to /recipelist. Here, we pass in a params which is the object id.

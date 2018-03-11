@@ -9,11 +9,11 @@ const RecipelistSchema = mongoose.Schema({
 		required: true
 	},
 	description: String,
-	category: {
-		type: String,
-		required: false,
-		enum: ['High', 'Medium', 'Low']
-	}
+	// category: {
+	// 	type: String,
+	// 	required: false,
+	// 	enum: ['High', 'Medium', 'Low']
+	// }
 });
 
 //Create a model using mongoose.model and export it

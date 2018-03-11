@@ -5,19 +5,19 @@ export default {
     return Api().get('recipes');
   },
 
-  addPost(params) {
-    return Api().post('add_post', params);
+  addRecipe(params) {
+    return Api().post('recipes/add', params);
   },
 
-  updatePost(params) {
-    return Api().put(`posts/${params.id}`, params);
+  updateRecipe(params) {
+    return Api().put(`recipes/${params.id}`, params);
   },
 
-  getPost(params) {
-    return Api().get(`post/${params.id}`);
+  getRecipe(params) {
+    return Api().get(`recipe/${params.id}`);
   },
 
-  deletePost(id) {
-    return Api().delete(`posts/${id}`);
+  deleteRecipe(id) {
+    return Api().delete(`recipes/${id}`);
   },
 };
