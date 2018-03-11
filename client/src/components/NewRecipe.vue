@@ -4,7 +4,7 @@
             <h2 class="blog-post-title">Add New Recipe</h2>
           <div class="form-group">
             <label for="exampleFormControlTextarea1">Title</label>
-            <textarea class="form-control" id="exampleFormControlTextarea1" rows="1" v-model="title"></textarea>
+            <input class="form-control" id="exampleFormControlTextarea1" rows="1" v-model="title">
             <label for="exampleFormControlTextarea2">Description</label>
             <textarea class="form-control" id="exampleFormControlTextarea2" rows="5" v-model="description"></textarea>
             <p>{{ title }}</p>
@@ -40,27 +40,17 @@ export default {
       this.$router.push({ name: 'Recipes' });
     },
   },
-  // mounted() {
-  //   this.getRecipes();
-  // },
-  // methods: {
-  //   async getRecipes() {
-  //     const response = await RecipesServices.fetchRecipes();
-  //     console.log(response.data.lists);
-  //     this.recipes = response.data.lists;
-  //   },
-  // },
-
-
 };
 </script>
 
  Add "scoped" attribute to limit CSS to this component only
 <style scoped>
 
+/*
 .blog-form {
     padding: 1.25em;
     border: cornflowerblue 1px solid;
 }
+*/
 
 </style>

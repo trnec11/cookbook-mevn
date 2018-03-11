@@ -2,11 +2,31 @@
     <div>
         <h1 class="blog-header">Recipes:</h1>
         <hr>
-        <div class="blog-post" v-for="recipe in recipes" :key="recipe.id">
-            <h2 class="blog-post-title">{{ recipe.title }}</h2>
-            <p class="blog-post-meta">January 1, 2014 by <a href="#">Mark</a></p>
-            <p>{{ recipe.description }}</p>
-        </div><!-- /.blog-post -->
+        <div v-if="recipes.length > 0">
+            <div class="add_recipe">
+                <router-link v-bind:to="{ name: 'NewRecipe' }" class="add_post_link">Add Recipe</router-link>
+            </div>
+            <hr>
+            <div class="blog-post" v-for="recipe in recipes" :key="recipe.id">
+                <h2 class="blog-post-title">{{ recipe.title }}</h2>
+                <p class="blog-post-meta">January 1, 2014 by <a href="#">Mark</a></p>
+                <p>{{ recipe.description }}</p>
+            </div><!-- /.blog-post -->
+
+
+            <nav class="blog-pagination">
+                <a class="btn btn-outline-primary" href="#">Older</a>
+                <a class="btn btn-outline-secondary disabled" href="#">Newer</a>
+            </nav>
+        </div>
+        <div v-else>
+            <div class="add_recipe">
+                <router-link v-bind:to="{ name: 'NewRecipe' }" class="add_post_link">Add Recipe</router-link>
+            <br>
+            </div>
+            nothing yet
+            <br>
+        </div>
     </div>
 </template>
 
@@ -35,20 +55,22 @@ export default {
 };
 </script>
 
-<!-- Add "scoped" attribute to limit CSS to this component only -->
-<!--<style scoped>-->
-<!--h1, h2 {-->
-  <!--font-weight: normal;-->
-<!--}-->
-<!--ul {-->
-  <!--list-style-type: none;-->
-  <!--padding: 0;-->
-<!--}-->
-<!--li {-->
-  <!--display: inline-block;-->
-  <!--margin: 0 10px;-->
-<!--}-->
-<!--a {-->
-  <!--color: #42b983;-->
-<!--}-->
-<!--</style>-->
+ Add "scoped" attribute to limit CSS to this component only
+<style scoped>
+    a {
+        color: #4d7ef7;
+        text-decoration: none;
+    }
+    a.add_post_link {
+        background: #4d7ef7;
+        color: #fff;
+        padding: 10px 80px;
+        text-transform: uppercase;
+        font-size: 12px;
+        font-weight: bold;
+    }
+
+    .add_recipe {
+        padding: 1.25em 0;
+    }
+</style>

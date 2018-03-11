@@ -1,11 +1,8 @@
 <template>
   <div id="app">
+
     <router-view/>
 
-    <nav class="blog-pagination">
-      <a class="btn btn-outline-primary" href="#">Older</a>
-      <a class="btn btn-outline-secondary disabled" href="#">Newer</a>
-    </nav>
   </div>
 </template>
 
@@ -16,10 +13,11 @@ import NewRecipe from './components/NewRecipe';
 export default {
   name: 'App',
 
-  components: {
-    'app-recipes': Recipes,
+/*  components: {
+      AppNewRecipe,
+      'app-recipes': Recipes,
     'app-new-recipe': NewRecipe,
-  },
+  },*/
 };
 </script>
 

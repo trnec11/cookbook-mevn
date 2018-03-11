@@ -14,6 +14,7 @@ export default new Router({
     },
     {
       path: 'recipes/add',
+      name: 'NewRecipe',
       component: NewRecipe,
     },
   ],
