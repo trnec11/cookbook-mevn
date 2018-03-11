@@ -8,7 +8,6 @@ const app = express()
 //GET HTTP method to /recipelist
 router.get('/',(req,res) => {
 	recipelist.getAllLists((err, lists) => {
-		lists.sort({title: -1})
 		if(err) {
 			res.json({success:false, message: `Failed to load all lists. Error: ${err}`})
 		}
