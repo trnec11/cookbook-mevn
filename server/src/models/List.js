@@ -8,7 +8,10 @@ const RecipelistSchema = mongoose.Schema({
     type: String,
     required: true,
   },
-  description: String,
+  description: {
+    type: String,
+    required: true,
+  },
 });
 
 // Create a model using mongoose.model and export it
@@ -26,6 +29,7 @@ module.exports.getOne = (id, callback) => {
   RecipeList.findById(query, callback);
 };
 
+// RecipeList.findByIdAndUpdateindOne() update and returns one list
 module.exports.updateListById = (id, setup, callback) => {
   const query = { _id: id };
   RecipeList.findByIdAndUpdate(query, setup, callback);

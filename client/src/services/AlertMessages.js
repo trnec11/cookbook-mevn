@@ -9,17 +9,11 @@ export default {
   deleteMessage() {
     return {
       title: 'Are you sure?',
-      text: 'You can\'t revert your action',
+      text: "You won't be able to revert this!",
       type: 'warning',
       showCancelButton: true,
-      confirmButtonText: 'Yes Delete it!',
-      cancelButtonText: 'No, Keep it!',
-      showCloseButton: true,
-      showLoaderOnConfirm: true,
-      resultParams: {
-        deleted: ['You successfully deleted this file', 'success'],
-        canceled: ['Cancelled', 'Your file is still intact', 'info'],
-      },
-    };
+      confirmButtonColor: '#3085d6',
+      cancelButtonColor: '#d33',
+      confirmButtonText: 'Yes, delete it!' };
   },
 };

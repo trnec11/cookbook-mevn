@@ -13,7 +13,7 @@
                 <p>{{ recipe.description }}</p>
                 <div class="item_control">
                     <router-link class="item_edit" v-bind:to="{ name: 'updateRecipe', params: { id: recipe._id } }">Edit</router-link>
-                    <a href="" class="item_delete" @click="deleteRecipe( recipe._id )">Delete</a>
+                    <a class="item_delete" @click="deleteRecipe( recipe._id )">Delete</a>
                 </div>
             </div><!-- /.blog-post -->
 
@@ -37,7 +37,7 @@
 <script>
 
 import RecipesServices from '@/services/RecipesService';
-// import AlerMessages from '@/services/AlerMessages';
+import AlertMessages from '@/services/AlertMessages';
 
 export default {
   name: 'recipes',
@@ -56,16 +56,26 @@ export default {
       this.recipes = response.data.lists;
     },
     async deleteRecipe(recipeId) {
-        await RecipesServices.deleteRecipe({id: recipeId});
+      this.$swal(AlertMessages.deleteMessage())
+        .then((result) => { 
+          if (result.value) {
+            RecipesServices.deleteRecipe({id: recipeId});
+            this.$swal('Deleted!', 'Your file has been deleted.', 'success')
+            this.$router.push('recipes')
+          } else {
+            this.$swal('Something was wrong')
+          }                
+        })
+      //   .then((result) => {
 
-        console.log(recipeId);
-        // this.$swal(AlerMessages.deleteMessage()).then((result) => {
-        //   if(result.value) {
-        //     this.$swal(AlerMessages.deleteMessage().resultParams.deleted.join(', '))
-        //   } else {
-        //     this.$swal(AlerMessages.deleteMessage().resultParams.canceled.join(', '))
-        //   }
-        // })  
+      //     if(result) {
+      //       console.log(result);
+      //       // this.$swal(AlerMessages.deleteMessage().resultParams.deleted.join(', '))
+      //     } else {
+      //       // this.$swal(AlerMessages.deleteMessage().resultParams.canceled.join(', '))
+      //     }
+      //     // await RecipesServices.deleteRecipe({id: recipeId});
+      // })  
     },
   },
 };
