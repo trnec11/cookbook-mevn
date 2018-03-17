@@ -48,7 +48,7 @@ router.post('/add', (req, res) => {
 });
 
 router.put('/:id', (req, res) => {
-  // console.log(req.body)
+  console.log(req.params);
   const recipeId = req.params.id;
   RecipeList.updateListById(recipeId, { $set: req.body }, (err) => {
     if (err) {
@@ -62,7 +62,7 @@ router.put('/:id', (req, res) => {
 // DELETE HTTP method to /recipelist. Here, we pass in a params which is the object id.
 router.delete('/:id', (req, res) => {
   const recipeId = req.params.id;
-  // console.log(req.id)
+  console.log(req.params);
   RecipeList.deleteListById(recipeId, (err, list) => {
     if (err) {
       res.json({ success: false, message: `Failed to delete the list. Error: ${err}` });

@@ -36,7 +36,6 @@ module.exports.addList = (newList, callback) => {
   newList.save(callback);
 };
 
-
 // We pass on an id and remove it from DB using Bucketlist.remove()
 module.exports.deleteListById = (id, callback) => {
   const query = { _id: id };
