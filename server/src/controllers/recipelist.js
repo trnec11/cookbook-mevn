@@ -32,7 +32,6 @@ router.get('/:id', (req, res) => {
 });
 
 // POST HTTP method to /recipelist
-
 router.post('/add', (req, res) => {
   const newList = new RecipeList({
     title: req.body.title,
@@ -45,6 +44,7 @@ router.post('/add', (req, res) => {
   });
 });
 
+// PUT HTTP method to /recipelist
 router.put('/:id', (req, res) => {
   // console.log(req.params);
   const recipeId = req.params.id;
@@ -55,7 +55,6 @@ router.put('/:id', (req, res) => {
     res.send('updated');
   });
 });
-
 
 // DELETE HTTP method to /recipelist. Here, we pass in a params which is the object id.
 router.delete('/:id', (req, res) => {

@@ -16,7 +16,7 @@ const RecipelistSchema = mongoose.Schema({
 
 // Create a model using mongoose.model and export it
 const RecipeList = mongoose.model('RecipeList', RecipelistSchema);
-
+module.exports = RecipeList;
 
 // RecipeList.find() returns all the lists
 module.exports.getAllLists = (callback) => {
@@ -45,3 +45,4 @@ module.exports.deleteListById = (id, callback) => {
   const query = { _id: id };
   RecipeList.remove(query, callback);
 };
+
