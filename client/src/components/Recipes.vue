@@ -11,9 +11,9 @@
                 <h2 class="blog-post-title">{{ recipe.title }}</h2>
                 <p class="blog-post-meta">January 1, 2014 by <a href="#">Mark</a></p>
                 <p>{{ recipe.description }}</p>
-                <div class="edit_recipe">
-                    <router-link v-bind:to="{ name: 'updateRecipe', params: { id: recipe._id } }">Edit</router-link>
-                    <a @click="deleteRecipe()">Delete</a>
+                <div class="item_control">
+                    <router-link class="item_edit" v-bind:to="{ name: 'updateRecipe', params: { id: recipe._id } }">Edit</router-link>
+                    <a class="item_delete" @click="deleteRecipe( recipe._id )">Delete</a>
                 </div>
             </div><!-- /.blog-post -->
 
@@ -37,7 +37,7 @@
 <script>
 
 import RecipesServices from '@/services/RecipesService';
-// import AlertDisplay from '@/services/AlerMessages';
+import AlertMessages from '@/services/AlertMessages';
 
 export default {
   name: 'recipes',
@@ -53,12 +53,21 @@ export default {
   methods: {
     async getRecipes() {
       const response = await RecipesServices.fetchRecipes();
-      this.recipes = response.data.lists.sort();
+      this.recipes = response.data.lists;
     },
-    async deleteRecipe(id) {
-        await RecipesServices.deleteRecipe({
-            id: this.$route.params.id
-        });
+    async deleteRecipe(recipeId) {
+      this.$swal(AlertMessages.deleteMessage())
+        .then((result) => { 
+          if (result.value) {
+            RecipesServices.deleteRecipe({id: recipeId});
+            this.$swal('Deleted!', 'Your file has been deleted.', 'success').
+              then(() => {
+                this.$router.go('/')
+              })
+          } else {
+            this.$swal('Something was wrong')
+          }                
+        })
     },
   },
 };
@@ -66,27 +75,57 @@ export default {
 
  Add "scoped" attribute to limit CSS to this component only
 <style scoped>
-    a {
-        color: #4d7ef7;
-        text-decoration: none;
-    }
-    a.add_post_link {
-        background: #4d7ef7;
-        color: #fff;
-        padding: 10px 80px;
-        text-transform: uppercase;
-        font-size: 12px;
-        font-weight: bold;
-    }
+  a {
+    color: #4d7ef7;
+    text-decoration: none;
+  }
+  a.add_post_link {
+    background: #4d7ef7;
+    color: #fff;
+    padding: 10px 80px;
+    text-transform: uppercase;
+    font-size: 12px;
+    font-weight: bold;
+  }
 
-    .add_recipe {
-        padding: 1.25em 0;
-    }
+  .add_recipe {
+    padding: 1.25em 0;
+  }
 
-    .edit_recipe {
-        display: inline-block;
-        padding: .75em 0;
-    }
+  .edit_recipe {
+    display: inline-block;
+    padding: .75em 0;
+  }
+
+  .item_control {
+    padding: 1em 0;
+  }
+
+  .item_control a {
+    text-decoration: none;
+    color: #fff;
+    border-radius: 5%;
+    margin-right: .5em;
+  }
+  .item_control a:hover {
+    box-shadow:
+      1px 1px #f5ff6a,
+      2px 2px #f5ff6a,
+      3px 3px #f5ff6a;
+    -webkit-transform: translateX(-3px);
+    transform: translateX(-3px);
+    color: #f5ff6a;
+  }
+
+  .item_edit {
+    padding: .7em;
+    background: rgb(90, 160, 10); 
+  }
+
+  .item_delete {
+    padding: .7em;
+    background: rgb(226, 4, 4)0; 
+  }
 
     /* Pagination */
   .blog-pagination {

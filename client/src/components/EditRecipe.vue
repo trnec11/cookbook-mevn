@@ -38,7 +38,7 @@
 <script>
 
 import RecipesServices from '@/services/RecipesService';
-import AlertDisplay from '@/services/AlertMessages';
+import AlertMessages from '@/services/AlertMessages';
 
 export default {
   name: 'updateRecipe',
@@ -66,11 +66,7 @@ export default {
         title: this.title,
         description: this.description,
       });
-      this.$swal(
-        'Great!',
-        'Your post has been updated!',
-        'success',
-      );
+      this.$swal(AlertMessages.updateMessage().join(', '));  
       this.$router.push({ name: 'updateRecipe' });
     },
   },
