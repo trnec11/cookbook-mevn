@@ -14,7 +14,6 @@ router.get('/', (req, res) => {
       res.send({ success: true, lists });
     //   res.end()
     }
-    console.log(lists);
   });
 });
 
@@ -63,7 +62,7 @@ router.put('/:id', (req, res) => {
 // DELETE HTTP method to /recipelist. Here, we pass in a params which is the object id.
 router.delete('/:id', (req, res) => {
   const recipeId = req.params.id;
-  // console.log(id)
+  // console.log(req.id)
   RecipeList.deleteListById(recipeId, (err, list) => {
     if (err) {
       res.json({ success: false, message: `Failed to delete the list. Error: ${err}` });

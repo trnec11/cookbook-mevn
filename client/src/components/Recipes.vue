@@ -13,7 +13,7 @@
                 <p>{{ recipe.description }}</p>
                 <div class="edit_recipe">
                     <router-link v-bind:to="{ name: 'updateRecipe', params: { id: recipe._id } }">Edit</router-link>
-                    <a @click="deleteRecipe()">Delete</a>
+                    <a @click="deleteRecipe(recipe._id)">Delete</a>
                 </div>
             </div><!-- /.blog-post -->
 
@@ -37,7 +37,7 @@
 <script>
 
 import RecipesServices from '@/services/RecipesService';
-// import AlertDisplay from '@/services/AlerMessages';
+// import AlerMessages from '@/services/AlerMessages';
 
 export default {
   name: 'recipes',
@@ -53,12 +53,19 @@ export default {
   methods: {
     async getRecipes() {
       const response = await RecipesServices.fetchRecipes();
-      this.recipes = response.data.lists.sort();
+      this.recipes = response.data.lists;
     },
     async deleteRecipe(id) {
         await RecipesServices.deleteRecipe({
             id: this.$route.params.id
         });
+        // this.$swal(AlerMessages.deleteMessage()).then((result) => {
+        //   if(result.value) {
+        //     this.$swal(AlerMessages.deleteMessage().resultParams.deleted.join(', '))
+        //   } else {
+        //     this.$swal(AlerMessages.deleteMessage().resultParams.canceled.join(', '))
+        //   }
+        // })  
     },
   },
 };
