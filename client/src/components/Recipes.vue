@@ -60,22 +60,14 @@ export default {
         .then((result) => { 
           if (result.value) {
             RecipesServices.deleteRecipe({id: recipeId});
-            this.$swal('Deleted!', 'Your file has been deleted.', 'success')
-            this.$router.push('recipes')
+            this.$swal('Deleted!', 'Your file has been deleted.', 'success').
+              then(() => {
+                this.$router.go('/')
+              })
           } else {
             this.$swal('Something was wrong')
           }                
         })
-      //   .then((result) => {
-
-      //     if(result) {
-      //       console.log(result);
-      //       // this.$swal(AlerMessages.deleteMessage().resultParams.deleted.join(', '))
-      //     } else {
-      //       // this.$swal(AlerMessages.deleteMessage().resultParams.canceled.join(', '))
-      //     }
-      //     // await RecipesServices.deleteRecipe({id: recipeId});
-      // })  
     },
   },
 };
