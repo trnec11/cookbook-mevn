@@ -1,3 +1,3 @@
 module.exports = {
-    database: 'mongodb://localhost:27017/cookbook'
-}
+  database: 'mongodb://localhost:27017/cookbook',
+};

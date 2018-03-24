@@ -6,6 +6,7 @@ const cors = require('cors');
 const mongoose = require('mongoose');
 const config = require('./config/database');
 const recipelist = require('./controllers/recipelist');
+const userlist = require('./controllers/userlist');
 
 // Connect mongoose to our database
 mongoose.connect(config.database);
@@ -44,8 +45,12 @@ app.get('/', (req, res) => {
 // Routing all HTTP requests to /recipelist to recipelist controller
 app.use('/recipes', recipelist);
 
+// 404
+app.use((req, res) => {
+  res.sendStatus(404);
+});
 
 // Listen to port 3000
 app.listen(port, () => {
-  console.log(`Starting the server at port ${port}`);
+  // console.log(`Starting the server at port ${port}`);
 });
