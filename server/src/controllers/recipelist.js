@@ -11,10 +11,7 @@ router.get('/', (req, res) => {
       res.send({ success: false, message: `Failed to load all lists. Error: ${err}` });
     } else {
       // res.write(JSON.stringify({success: true, lists:lists},null,2))
-      // res.send({ success: true, lists });
-      // res.render('index', {});
-      // res.send(lists);
-      res.render('index', lists);
+      res.send({ success: true, lists });
     }
   });
 });
