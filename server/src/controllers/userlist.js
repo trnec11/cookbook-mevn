@@ -2,25 +2,26 @@
 const express = require('express');
 
 const router = express.Router();
-const RecipeList = require('../models/List');
+const UserList = require('../models/User');
 
-// GET HTTP method to /recipelist
+// GET HTTP method to /UserList
 router.get('/', (req, res) => {
-  RecipeList.getAllLists((err, lists) => {
+  UserList.getAllLists((err, lists) => {
     if (err) {
       res.send({ success: false, message: `Failed to load all lists. Error: ${err}` });
     } else {
       // res.write(JSON.stringify({success: true, lists:lists},null,2))
       res.send({ success: true, lists });
+    //   res.end()
     }
   });
 });
 
-// GET HTTP method to /recipelist/:id
+// GET HTTP method to /UserList/:id
 router.get('/:id', (req, res) => {
   const recipeId = req.params.id;
   // console.log(id)
-  RecipeList.getOne(recipeId, (err, list) => {
+  UserList.getOne(recipeId, (err, list) => {
     if (err) {
       res.json({ success: false, message: `Failed to load one list. Error: ${err}` });
     } else {
@@ -30,24 +31,26 @@ router.get('/:id', (req, res) => {
   });
 });
 
-// POST HTTP method to /recipelist
-router.post('/add', (req, res) => {
-  const newList = new RecipeList({
-    title: req.body.title,
-    description: req.body.description,
+// POST HTTP method to /UserList
+router.post('/signup', (req, res) => {
+  const newList = new UserList({
+    email: req.body.email,
+    username: req.body.username,
+    password: req.body.password,
+    passwordConf: req.body.passwordConf,
   });
-  RecipeList.addList(newList, (err, list) => {
+  UserList.addList(newList, (err, list) => {
     if (err) {
       res.json({ success: false, message: `Failed to create a new list. Error: ${err}` });
     } else { res.json({ success: true, message: 'Added successfully.', list }); }
   });
 });
 
-// PUT HTTP method to /recipelist
+// PUT HTTP method to /UserList
 router.put('/:id', (req, res) => {
   // console.log(req.params);
   const recipeId = req.params.id;
-  RecipeList.updateListById(recipeId, { $set: req.body }, (err) => {
+  UserList.updateListById(recipeId, { $set: req.body }, (err) => {
     if (err) {
       res.json({ success: false, message: `Failed to create a new list. Error: ${err}` });
     }
@@ -55,11 +58,11 @@ router.put('/:id', (req, res) => {
   });
 });
 
-// DELETE HTTP method to /recipelist. Here, we pass in a params which is the object id.
+// DELETE HTTP method to /UserList. Here, we pass in a params which is the object id.
 router.delete('/:id', (req, res) => {
   const recipeId = req.params.id;
   // console.log(req.params);
-  RecipeList.deleteListById(recipeId, (err, list) => {
+  UserList.deleteListById(recipeId, (err, list) => {
     if (err) {
       res.json({ success: false, message: `Failed to delete the list. Error: ${err}` });
     } else if (list) {

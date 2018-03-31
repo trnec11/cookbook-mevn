@@ -106,7 +106,9 @@ export default {
     color: #fff;
     border-radius: 5%;
     margin-right: .5em;
+    cursor: pointer;
   }
+  
   .item_control a:hover {
     box-shadow:
       1px 1px #f5ff6a,
