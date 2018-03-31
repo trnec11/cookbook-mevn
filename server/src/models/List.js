@@ -12,6 +12,12 @@ const RecipelistSchema = mongoose.Schema({
     type: String,
     required: true,
   },
+  settings : {
+    color: {
+      type: String,
+      default: '#000'
+    }
+  }
 });
 
 // Create a model using mongoose.model and export it

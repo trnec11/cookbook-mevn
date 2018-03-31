@@ -35,6 +35,7 @@ router.post('/add', (req, res) => {
   const newList = new RecipeList({
     title: req.body.title,
     description: req.body.description,
+    settings: req.body.settings
   });
   RecipeList.addList(newList, (err, list) => {
     if (err) {
