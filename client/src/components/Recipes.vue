@@ -7,10 +7,10 @@
                 <router-link v-bind:to="{ name: 'newRecipe' }" class="add_post_link">Add Recipe</router-link>
             </div>
             <hr>
-            <div class="blog-post" v-for="recipe in recipes" :key="recipe.id">
+            <div class="blog-post" v-bind:style="{ color: recipe.settings.color }" v-for="recipe in recipes" :key="recipe._id">
                 <h2 class="blog-post-title">{{ recipe.title }}</h2>
                 <p class="blog-post-meta">January 1, 2014 by <a href="#">Mark</a></p>
-                <p>{{ recipe.description }}</p>
+                <p v-bind:style="{ backgroundColor: '{recipe.settings.color}' }" >{{ recipe.description }}</p>
                 <div class="item_control">
                     <router-link class="item_edit" v-bind:to="{ name: 'updateRecipe', params: { id: recipe._id } }">Edit</router-link>
                     <a class="item_delete" @click="deleteRecipe( recipe._id )">Delete</a>
@@ -57,17 +57,17 @@ export default {
     },
     async deleteRecipe(recipeId) {
       this.$swal(AlertMessages.deleteMessage())
-        .then((result) => { 
+        .then((result) => {
           if (result.value) {
-            RecipesServices.deleteRecipe({id: recipeId});
-            this.$swal('Deleted!', 'Your file has been deleted.', 'success').
-              then(() => {
-                this.$router.go('/')
-              })
+            RecipesServices.deleteRecipe({ id: recipeId });
+            this.$swal('Deleted!', 'Your file has been deleted.', 'success')
+              .then(() => {
+                this.$router.go('/');
+              });
           } else {
-            this.$swal('Something was wrong')
-          }                
-        })
+            this.$swal('Something was wrong');
+          }
+        });
     },
   },
 };
@@ -108,7 +108,7 @@ export default {
     margin-right: .5em;
     cursor: pointer;
   }
-  
+
   .item_control a:hover {
     box-shadow:
       1px 1px #f5ff6a,
@@ -121,12 +121,12 @@ export default {
 
   .item_edit {
     padding: .7em;
-    background: rgb(90, 160, 10); 
+    background: rgb(90, 160, 10);
   }
 
   .item_delete {
     padding: .7em;
-    background: rgb(226, 4, 4)0; 
+    background: rgb(226, 4, 4)0;
   }
 
     /* Pagination */
