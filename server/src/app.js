@@ -6,15 +6,14 @@ const cors = require('cors');
 const mongoose = require('mongoose');
 const config = require('./config/database');
 const recipelist = require('./controllers/recipelist');
+const userList = require('./controllers/userlist');
 // const userlist = require('./controllers/userlist');
+const session = require('express-session');
+const MongoStore = require('connect-mongo')(session);
 
 // Connect mongoose to our database
 mongoose.connect(config.database);
-
-// const Cat = mongoose.model('Cat', { name: String });
-//
-// const kitty = new Cat({ name: 'Zildjian' });
-// kitty.save().then(() => console.log('meow'));
+const db = mongoose.connection;
 
 // Declaring Port
 const port = 8081;
@@ -26,6 +25,16 @@ const app = express();
 app.set('view engine', 'pug');
 
 app.set('views', path.join(__dirname, 'views'));
+
+// use sessions for tracking logins
+app.use(session({
+  secret: 'work hard',
+  resave: true,
+  saveUninitialized: false,
+  store: new MongoStore({
+    mongooseConnection: db,
+  }),
+}));
 
 // Middleware for CORS
 app.use(cors());
@@ -48,13 +57,14 @@ app.get('/', (req, res) => {
 
 // Routing all HTTP requests to /recipelist to recipelist controller
 app.use('/recipes', recipelist);
+app.use('/user', userList);
 
 // 404
 app.use((req, res) => {
   res.sendStatus(404);
 });
 
-// Listen to port 3000
+// Listen to port 8081
 app.listen(port, () => {
-  // console.log(`Starting the server at port ${port}`);
+  console.log(`Starting the server at port ${port}`);
 });

@@ -1,9 +1,7 @@
-// Require mongoose package
 const mongoose = require('mongoose');
 const bcrypt = require('bcrypt');
 
-// Define UserListSchema with title, description and category
-const UserListSchema = mongoose.Schema({
+const UserSchema = new mongoose.Schema({
   email: {
     type: String,
     unique: true,
@@ -26,45 +24,38 @@ const UserListSchema = mongoose.Schema({
   },
 });
 
-// UserListSchema.pre('save', (next) => {
-//     let user = this;
-//     bcrypt.hash(user.password, 10, (err, hash) => {
-//         if (err) {
-//             return next(err);
-//         }
-//         user.password = hash;
-//         next();
-//     })
-// })
-
 // Create a model using mongoose.model and export it
-const UserList = mongoose.model('UserList', UserListSchema);
-module.exports = UserList;
+const User = mongoose.model('User', UserSchema);
+module.exports = User;
 
-// UserList.find() returns all the lists
-module.exports.getAllLists = (callback) => {
-  UserList.find(callback);
+// authenticate input against database
+UserSchema.statics.authenticate = function (email, password, callback) {
+  User.findOne({ email })
+    .exec((err, user) => {
+      if (err) {
+        return callback(err);
+      } else if (!user) {
+        const err = new Error('User not found.');
+        err.status = 401;
+        return callback(err);
+      }
+      bcrypt.compare(password, user.password, (err, result) => {
+        if (result === true) {
+          return callback(null, user);
+        }
+        return callback();
+      });
+    });
 };
 
-// UserList.findOne() returns one list
-module.exports.getOne = (id, callback) => {
-  const query = { _id: id };
-  UserList.findById(query, callback);
-};
+// hashing a password before saving it to the database
+UserSchema.pre('save', function (next) {
+  bcrypt.hash(this.password, 10, (err, hash) => {
+    if (err) {
+      return next(err);
+    }
+    this.password = hash;
+    next();
+  });
+});
 
-// UserList.findByIdAndUpdateindOne() update and returns one list
-module.exports.updateListById = (id, setup, callback) => {
-  const query = { _id: id };
-  UserList.findByIdAndUpdate(query, setup, callback);
-};
-
-// newList.save is used to insert the document into MongoDB
-module.exports.addList = (newList, callback) => {
-  newList.save(callback);
-};
-
-// We pass on an id and remove it from DB using Bucketlist.remove()
-module.exports.deleteListById = (id, callback) => {
-  const query = { _id: id };
-  UserList.remove(query, callback);
-};

@@ -47,7 +47,7 @@ export default {
     return {
       title: '',
       description: '',
-      color: '#000'
+      color: '#000',
     };
   },
 

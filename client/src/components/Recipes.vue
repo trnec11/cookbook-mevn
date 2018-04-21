@@ -1,46 +1,58 @@
 <template>
-    <div>
-        <h1 class="blog-header">Recipes:</h1>
-        <hr>
-        <div v-if="recipes.length > 0">
-            <div class="add_recipe">
-                <router-link v-bind:to="{ name: 'newRecipe' }" class="add_post_link">Add Recipe</router-link>
-            </div>
-            <hr>
-            <div class="blog-post" v-bind:style="{ color: recipe.settings.color }" v-for="recipe in recipes" :key="recipe._id">
-                <h2 class="blog-post-title">{{ recipe.title }}</h2>
-                <p class="blog-post-meta">January 1, 2014 by <a href="#">Mark</a></p>
-                <p v-bind:style="{ backgroundColor: '{recipe.settings.color}' }" >{{ recipe.description }}</p>
-                <div class="item_control">
-                    <router-link class="item_edit" v-bind:to="{ name: 'updateRecipe', params: { id: recipe._id } }">Edit</router-link>
-                    <a class="item_delete" @click="deleteRecipe( recipe._id )">Delete</a>
+    <main role="main" class="container">
+        <div class="row">
+            <div class="col-md-8 blog-main">
+
+                <h1 class="blog-header">Recipes:</h1>
+                <hr>
+                <div v-if="recipes.length > 0">
+                    <div class="add_recipe">
+                        <router-link v-bind:to="{ name: 'newRecipe' }" class="add_post_link">Add Recipe</router-link>
+                    </div>
+                    <hr>
+                    <div class="blog-post" v-bind:style="{ color: recipe.settings.color }" v-for="recipe in recipes" :key="recipe._id">
+                        <h2 class="blog-post-title">{{ recipe.title }}</h2>
+                        <p class="blog-post-meta">January 1, 2014 by <a href="#">Mark</a></p>
+                        <p v-bind:style="{ backgroundColor: '{recipe.settings.color}' }" >{{ recipe.description }}</p>
+                        <div class="item_control">
+                            <router-link class="item_edit" v-bind:to="{ name: 'updateRecipe', params: { id: recipe._id } }">Edit</router-link>
+                            <a class="item_delete" @click="deleteRecipe( recipe._id )">Delete</a>
+                        </div>
+                    </div><!-- /.blog-post -->
+
+
+                    <nav class="blog-pagination">
+                        <a class="btn btn-outline-primary" href="#">Older</a>
+                        <a class="btn btn-outline-secondary disabled" href="#">Newer</a>
+                    </nav>
                 </div>
-            </div><!-- /.blog-post -->
+                <div v-else>
+                    <div class="add_recipe">
+                        <router-link v-bind:to="{ name: 'newRecipe' }" class="add_post_link">Add Recipe</router-link>
+                        <br>
+                    </div>
+                    nothing yet
+                    <br>
+                </div>
 
+            </div><!-- /.blog-main -->
+            <app-sidebar></app-sidebar>
+        </div>
+    </main>
 
-            <nav class="blog-pagination">
-                <a class="btn btn-outline-primary" href="#">Older</a>
-                <a class="btn btn-outline-secondary disabled" href="#">Newer</a>
-            </nav>
-        </div>
-        <div v-else>
-            <div class="add_recipe">
-                <router-link v-bind:to="{ name: 'newRecipe' }" class="add_post_link">Add Recipe</router-link>
-            <br>
-            </div>
-            nothing yet
-            <br>
-        </div>
-    </div>
 </template>
 
 <script>
 
 import RecipesServices from '@/services/RecipesService';
 import AlertMessages from '@/services/AlertMessages';
+import AppSidebar from '@/components/AppSidebar';
 
 export default {
   name: 'recipes',
+  components: {
+    'app-sidebar': AppSidebar,
+  },
   data() {
     return {
       recipes: [],

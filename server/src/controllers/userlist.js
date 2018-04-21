@@ -1,74 +1,87 @@
-// Require the express package and use express.Router()
+/* eslint-disable no-underscore-dangle */
 const express = require('express');
 
 const router = express.Router();
-const UserList = require('../models/User');
+const User = require('../models/User');
 
-// GET HTTP method to /UserList
-router.get('/', (req, res) => {
-  UserList.getAllLists((err, lists) => {
-    if (err) {
-      res.send({ success: false, message: `Failed to load all lists. Error: ${err}` });
-    } else {
-      // res.write(JSON.stringify({success: true, lists:lists},null,2))
-      res.send({ success: true, lists });
-    //   res.end()
-    }
-  });
+// GET HTTP method to /recipelist
+router.get('/login', (req, res) => {
+  res.send('Hello World');
 });
 
-// GET HTTP method to /UserList/:id
-router.get('/:id', (req, res) => {
-  const recipeId = req.params.id;
-  // console.log(id)
-  UserList.getOne(recipeId, (err, list) => {
-    if (err) {
-      res.json({ success: false, message: `Failed to load one list. Error: ${err}` });
-    } else {
-      res.write(JSON.stringify({ success: true, list }, null, 2));
-      res.end();
-    }
-  });
+
+// POST route for updating data
+router.post('/data', (req, res, next) => {
+  // confirm that user typed same password twice
+  if (req.body.password !== req.body.passwordConf) {
+    const err = new Error('Passwords do not match.');
+    err.status = 400;
+    res.send('passwords dont match');
+    return next(err);
+  }
+
+  if (req.body.email &&
+        req.body.username &&
+        req.body.password &&
+        req.body.passwordConf) {
+    const userData = {
+      email: req.body.email,
+      username: req.body.username,
+      password: req.body.password,
+      passwordConf: req.body.passwordConf,
+    };
+
+    User.create(userData, (error, user) => {
+      if (error) {
+        return next(error);
+      }
+      req.session.userId = user._id;
+      return res.redirect('/profile');
+    });
+  } else if (req.body.logemail && req.body.logpassword) {
+    User.authenticate(req.body.logemail, req.body.logpassword, (error, user) => {
+      if (error || !user) {
+        const err = new Error('Wrong email or password.');
+        err.status = 401;
+        return next(err);
+      }
+      req.session.userId = user._id;
+      return res.redirect('/profile');
+    });
+  } else {
+    const err = new Error('All fields required.');
+    err.status = 400;
+    return next(err);
+  }
 });
 
-// POST HTTP method to /UserList
-router.post('/signup', (req, res) => {
-  const newList = new UserList({
-    email: req.body.email,
-    username: req.body.username,
-    password: req.body.password,
-    passwordConf: req.body.passwordConf,
-  });
-  UserList.addList(newList, (err, list) => {
-    if (err) {
-      res.json({ success: false, message: `Failed to create a new list. Error: ${err}` });
-    } else { res.json({ success: true, message: 'Added successfully.', list }); }
-  });
+// GET route after registering
+router.get('/profile', (req, res, next) => {
+  User.findById(req.session.userId)
+    .exec((error, user) => {
+      if (error) {
+        return next(error);
+      }
+      if (user === null) {
+        const err = new Error('Not authorized! Go back!');
+        err.status = 400;
+        return next(err);
+      }
+      return res.send(`<h1>Name: </h1>${user.username}<h2>Mail: </h2>${user.email}<br><a type="button" href="/logout">Logout</a>`);
+    });
 });
 
-// PUT HTTP method to /UserList
-router.put('/:id', (req, res) => {
-  // console.log(req.params);
-  const recipeId = req.params.id;
-  UserList.updateListById(recipeId, { $set: req.body }, (err) => {
-    if (err) {
-      res.json({ success: false, message: `Failed to create a new list. Error: ${err}` });
-    }
-    res.send('updated');
-  });
-});
-
-// DELETE HTTP method to /UserList. Here, we pass in a params which is the object id.
-router.delete('/:id', (req, res) => {
-  const recipeId = req.params.id;
-  // console.log(req.params);
-  UserList.deleteListById(recipeId, (err, list) => {
-    if (err) {
-      res.json({ success: false, message: `Failed to delete the list. Error: ${err}` });
-    } else if (list) {
-      res.json({ success: true, message: 'Deleted successfully' });
-    } else { res.json({ success: false }); }
-  });
+// GET for logout logout
+router.get('/logout', (req, res, next) => {
+  if (req.session) {
+    // delete session object
+    req.session.destroy((err) => {
+      if (err) {
+        return next(err);
+      }
+      return res.redirect('/');
+    });
+  }
 });
 
 module.exports = router;
