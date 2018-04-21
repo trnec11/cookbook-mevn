@@ -12,12 +12,12 @@ const RecipelistSchema = mongoose.Schema({
     type: String,
     required: true,
   },
-  settings : {
+  settings: {
     color: {
       type: String,
-      default: '#000'
-    }
-  }
+      default: '#000',
+    },
+  },
 });
 
 // Create a model using mongoose.model and export it
@@ -46,7 +46,7 @@ module.exports.addList = (newList, callback) => {
   newList.save(callback);
 };
 
-// We pass on an id and remove it from DB using Bucketlist.remove()
+// We pass on an id and remove it from DB using Recipes.remove()
 module.exports.deleteListById = (id, callback) => {
   const query = { _id: id };
   RecipeList.remove(query, callback);
