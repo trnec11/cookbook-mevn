@@ -1,7 +1,6 @@
 import Vue from 'vue';
 import Router from 'vue-router';
 import Recipes from '@/components/Recipes';
-import AppSidebar from '@/components/AppSidebar';
 import NewRecipe from '@/components/NewRecipe';
 import EditRecipe from '@/components/EditRecipe';
 import UserLogin from '@/components/UserLogin';
